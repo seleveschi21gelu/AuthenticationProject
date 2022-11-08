@@ -56,3 +56,8 @@ C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\CompanyEmployees.pdb
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\CompanyEmployees.genruntimeconfig.cache
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\ref\CompanyEmployees.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
