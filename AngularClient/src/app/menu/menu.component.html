@@ -16,7 +16,8 @@
           <a class="nav-link" href="#">Privacy </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link register " [routerLink]="['/authentication/register']">Register </a>
+          <a class="nav-link register" [routerLink]="['/authentication/register']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">Register </a>
         </li>
       </ul>
     </div>

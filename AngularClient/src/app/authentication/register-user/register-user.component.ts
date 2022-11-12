@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/models/UserModel';
+import { PasswordConfirmationValidatorService } from 'src/app/shared/custom-validators/password-confirmation-validator.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class RegisterUserComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private passwordConfirmValidatorService: PasswordConfirmationValidatorService) {
 
   }
 
@@ -23,6 +24,9 @@ export class RegisterUserComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')
     });
+
+    this.registerForm.get('confirm').setValidators([Validators.required,
+      this.passwordConfirmValidatorService.validateConfirmPassword(this.registerForm.get('password'))]);
   }
 
   public validateControl = (controlName: string) => {
