@@ -29,7 +29,7 @@
         </ul>
         <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <button class="btn btn-link" style="color: #ffffff80;">Logout</button>
+            <button class="btn btn-link" style="color: #ffffff80;"  (click)="logout()">Logout</button>
           </li>
         </ul>
       </form>

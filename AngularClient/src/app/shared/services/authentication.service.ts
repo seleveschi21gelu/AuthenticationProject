@@ -11,8 +11,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-private authChangeSub = new Subject<boolean>();
-public authChanged = this.authChangeSub.asObservable();
+  private authChangeSub = new Subject<boolean>();
+  public authChanged = this.authChangeSub.asObservable();
   constructor(private http: HttpClient, private envUrl: EnvironmentUrlService) { }
 
   public registerUser = (route: string, body: UserModel) => {
@@ -29,5 +29,10 @@ public authChanged = this.authChangeSub.asObservable();
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
     this.authChangeSub.next(isAuthenticated);
+  }
+
+  public logout = () => {
+    localStorage.removeItem("token");
+    this.sendAuthStateChangeNotification(false);
   }
 }
