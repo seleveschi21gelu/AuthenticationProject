@@ -36,6 +36,21 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Authentication.Certificate/6.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Certificate.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Certificate.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/6.0.5": {
         "type": "package",
         "compile": {
@@ -765,6 +780,21 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.Certificate/6.0.5": {
+      "sha512": "g8d0NoPLH86eQZv1jH0e13b+v/i675r6O4AnTvpwwqdyOnhd9PWeK9Vm+SvprMMI8BX/jMN5+J3TAQH2La5p6w==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.certificate/6.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Certificate.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Certificate.xml",
+        "microsoft.aspnetcore.authentication.certificate.6.0.5.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.certificate.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Cryptography.Internal/6.0.5": {
@@ -2063,6 +2093,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
+      "Microsoft.AspNetCore.Authentication.Certificate >= 6.0.5",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.5",
       "Microsoft.EntityFrameworkCore >= 6.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.5",
@@ -2116,6 +2147,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[11.0.0, )"
+          },
+          "Microsoft.AspNetCore.Authentication.Certificate": {
+            "target": "Package",
+            "version": "[6.0.5, )"
           },
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",

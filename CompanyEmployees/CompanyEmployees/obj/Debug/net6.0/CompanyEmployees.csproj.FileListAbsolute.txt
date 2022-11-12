@@ -61,3 +61,4 @@ C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Certificate.dll
