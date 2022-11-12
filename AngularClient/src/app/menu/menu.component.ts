@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   isCollapsed: boolean = false;
-  
-  constructor() { }
+  public isUserAuthenticated: boolean;
+
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.authService.authChanged.subscribe(res => {
+      this.isUserAuthenticated = res;
+    })
   }
 
 }
