@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CompanyEmployees.Controllers
 {
     [Route("api/companies")]
+    [Authorize]
     [ApiController]
     public class CompaniesController : ControllerBase
     {
