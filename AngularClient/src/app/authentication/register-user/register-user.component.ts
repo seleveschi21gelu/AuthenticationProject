@@ -12,6 +12,8 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 })
 export class RegisterUserComponent implements OnInit {
   registerForm: FormGroup;
+  public errorMessage: string = '';
+  public showError: boolean;
   constructor(private authService: AuthenticationService, private passwordConfirmValidatorService: PasswordConfirmationValidatorService) {
 
   }
@@ -26,7 +28,7 @@ export class RegisterUserComponent implements OnInit {
     });
 
     this.registerForm.get('confirm').setValidators([Validators.required,
-      this.passwordConfirmValidatorService.validateConfirmPassword(this.registerForm.get('password'))]);
+    this.passwordConfirmValidatorService.validateConfirmPassword(this.registerForm.get('password'))]);
   }
 
   public validateControl = (controlName: string) => {
@@ -38,6 +40,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   public registerUser = (registerFormValue) => {
+    this.showError = false;
     const formValues = { ...registerFormValue };
 
     const user: UserModel = {
@@ -50,7 +53,10 @@ export class RegisterUserComponent implements OnInit {
 
     this.authService.registerUser("api/Account/register", user).subscribe({
       next: (_) => console.log("Successful registration"),
-      error: (err: HttpErrorResponse) => console.log(err.error.errors)
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage = err.message;
+        this.showError = true;
+      }
     })
   }
 

@@ -26,8 +26,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
                 .AddCertificate();
 
-builder.Services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<RepositoryContext>();
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
+{
+    opt.Password.RequiredLength = 7;
+    opt.Password.RequireDigit = false;
+
+    opt.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<RepositoryContext>();
 
 builder.Services.AddControllers();
 
