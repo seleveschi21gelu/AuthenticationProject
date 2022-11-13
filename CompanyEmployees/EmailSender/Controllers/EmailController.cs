@@ -1,6 +1,7 @@
 ﻿using EmailSenderProject.Interfaces;
 using EmailSenderProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EmailSenderProject.Controllers
 {
@@ -16,6 +17,7 @@ namespace EmailSenderProject.Controllers
         }
 
         [HttpPost]
+        [Route("sendEmail")]
         public ActionResult SendEmail(EmailViewModel model)
         {
             if (!ModelState.IsValid)
@@ -23,8 +25,21 @@ namespace EmailSenderProject.Controllers
 
             var message = new Message(model.EmailAddresses, model.Subject, model.Body);
             var result = _emailSender.SendEmail(message);
+            
+            return result ? Ok(result) : BadRequest(result);
+        }
 
-            return result ? Ok() : NoContent();
+        [HttpPost]
+        [Route("sendEmailAsync")]
+        public async Task<ActionResult<bool>> SendEmailAsync(EmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+                BadRequest();
+
+            var message = new Message(model.EmailAddresses, model.Subject, model.Body);
+            var result = await _emailSender.SendEmailAsync(message);
+
+            return result ? Ok(result) : BadRequest(result);
         }
     }
 }

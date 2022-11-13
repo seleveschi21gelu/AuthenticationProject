@@ -28,8 +28,16 @@ namespace EmailSenderProject.Models
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
 
             return emailMessage;
+        }
+
+        public async Task<bool> SendEmailAsync(Message message)
+        {
+            var mailMessage = CreateEmailMessage(message);
+
+            return await SendAsync(mailMessage);
         }
 
         private bool Send(MimeMessage mailMessage)
@@ -52,6 +60,31 @@ namespace EmailSenderProject.Models
                 finally
                 {
                     client.Disconnect(true);
+                    client.Dispose();
+                }
+            }
+        }
+
+        private async Task<bool> SendAsync(MimeMessage mailMessage)
+        {
+            using (var client = new SmtpClient())
+            {
+                try
+                {
+                    await client.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.Port, true);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    await client.AuthenticateAsync(_emailConfiguration.UserName, _emailConfiguration.Password);
+                    await client.SendAsync(mailMessage);
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+                finally
+                {
+                    await client.DisconnectAsync(true);
                     client.Dispose();
                 }
             }
