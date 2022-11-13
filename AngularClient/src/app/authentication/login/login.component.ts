@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
       email: login.username,
       password: login.password
     }
-    debugger;
 
     this.authService.loginUser('api/account/login', authUser)
       .subscribe({

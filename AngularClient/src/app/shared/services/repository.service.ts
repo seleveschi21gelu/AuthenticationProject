@@ -1,6 +1,6 @@
 import { Company } from './../../_interfaces/company.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvironmentUrlService } from './environment-url.service';
 
 @Injectable({
@@ -13,8 +13,12 @@ export class RepositoryService {
   public getData = (route: string) => {
     return this.http.get<Company[]>(this.createCompleteRoute(route, this.envUrl.urlAddress));
   }
- 
+
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
+  }
+
+  public getClaims = (route: string) => {
+    return this.http.get(this.createCompleteRoute(route, this.envUrl.urlAddress));
   }
 }

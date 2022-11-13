@@ -6,6 +6,7 @@ import { EnvironmentUrlService } from './environment-url.service';
 import { LoginModel } from 'src/app/models/loginModel';
 import { AuthResponse } from 'src/app/models/authResponse.model';
 import { Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { Subject } from 'rxjs';
 export class AuthenticationService {
   private authChangeSub = new Subject<boolean>();
   public authChanged = this.authChangeSub.asObservable();
-  constructor(private http: HttpClient, private envUrl: EnvironmentUrlService) { }
+  constructor(private http: HttpClient, private envUrl: EnvironmentUrlService, private jwtHelper: JwtHelperService) { }
 
   public registerUser = (route: string, body: UserModel) => {
     return this.http.post<RegisterResponse>(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
@@ -34,5 +35,19 @@ export class AuthenticationService {
   public logout = () => {
     localStorage.removeItem("token");
     this.sendAuthStateChangeNotification(false);
+  }
+
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+
+    return token && !this.jwtHelper.isTokenExpired(token);
+  }
+
+  public isUserAdmin = (): boolean => {
+    const token = localStorage.getItem("token");
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+
+    return role === 'Administrator';
   }
 }
