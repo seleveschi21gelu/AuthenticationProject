@@ -21,7 +21,7 @@ namespace EmailSenderProject.Controllers
         public ActionResult SendEmail(EmailViewModel model)
         {
             if (!ModelState.IsValid)
-                BadRequest();
+                return BadRequest();
 
             var message = new Message(model.EmailAddresses, model.Subject, model.Body);
             var result = _emailSender.SendEmail(message);
@@ -34,7 +34,7 @@ namespace EmailSenderProject.Controllers
         public async Task<ActionResult<bool>> SendEmailAsync(EmailViewModel model)
         {
             if (!ModelState.IsValid)
-                BadRequest();
+                return BadRequest();
 
             var message = new Message(model.EmailAddresses, model.Subject, model.Body);
             var result = await _emailSender.SendEmailAsync(message);
@@ -47,7 +47,7 @@ namespace EmailSenderProject.Controllers
         public async Task<ActionResult<bool>> SendEmailWithAttachmentsAsync(EmailViewModel model)
         {
             if (!ModelState.IsValid)
-                BadRequest();
+                return BadRequest();
 
             var rng = new Random();
             var files = Request.Form.Files.Any() ? Request.Form.Files : new FormFileCollection();

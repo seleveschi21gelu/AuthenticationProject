@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using CompanyEmployees.Entities.DataTransferObjects;
 using CompanyEmployees.Entities.Models;
+using EmailSenderProject.Interfaces;
+using EmailSenderProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace CompanyEmployees.Controllers
@@ -15,12 +18,14 @@ namespace CompanyEmployees.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
+        private readonly IEmailSender _emailSender;
 
-        public AccountController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
+        public AccountController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
+            _emailSender = emailSender;
         }
 
         [HttpPost("register")]
@@ -60,6 +65,31 @@ namespace CompanyEmployees.Controllers
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token });
+        }
+
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordVM model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return BadRequest("Invalid request");
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var param = new Dictionary<string, string?>
+            {
+                {"token", token },
+                {"email", model.Email}
+            };
+
+            var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback);
+
+            var result = await _emailSender.SendEmailAsync(message);
+
+            return result ? Ok(result) : BadRequest(result);
         }
     }
 }

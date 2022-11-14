@@ -1,11 +1,23 @@
 {
   "Version": 1,
-  "Hash": "zAHtNgykqAnDh2d21mU86qXiATJf8+Ii5zpNOzExq4M=",
+  "Hash": "DPiCw3riWufq+VVpVKCpLKDMUcFHEDjYxi2cO6h8fF4=",
   "Source": "CompanyEmployees",
   "BasePath": "_content/CompanyEmployees",
   "Mode": "Default",
   "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\PersonalProjects\\AuthenticationProject\\CompanyEmployees\\EmailSender\\EmailSenderProject.csproj",
+      "Version": 2,
+      "Source": "EmailSenderProject",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier"
+    }
+  ],
   "DiscoveryPatterns": [],
   "Assets": []
 }

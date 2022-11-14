@@ -2,6 +2,9 @@ using CompanyEmployees.Entities.DataTransferObjects;
 using CompanyEmployees.Entities.Models;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Repository;
+using EmailSenderProject.Interfaces;
+using EmailSenderProject.Models;
+using EmailService;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +39,10 @@ builder.Services.AddIdentity<User, IdentityRole>(opt =>
     opt.Password.RequireDigit = false;
 
     opt.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<RepositoryContext>();
+}).AddEntityFrameworkStores<RepositoryContext>()
+  .AddDefaultTokenProviders();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>
@@ -56,6 +62,12 @@ builder.Services.AddAuthentication(opt =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
     };
 });
+
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+                                       .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddControllers();
