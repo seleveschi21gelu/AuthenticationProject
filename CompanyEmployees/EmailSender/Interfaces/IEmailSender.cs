@@ -6,5 +6,6 @@ namespace EmailSenderProject.Interfaces
     {
         bool SendEmail(Message message);
         Task<bool> SendEmailAsync(Message message);
+        Task<bool> SendEmailWithAttachmentsAsync(Message message);
     }
 }
