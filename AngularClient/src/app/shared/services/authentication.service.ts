@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserModel } from 'src/app/models/userModel';
 import { RegisterResponse } from 'src/app/models/registerResponse';
@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ForgotPassword } from 'src/app/models/forgotPassword.model';
 import { ResetPassword } from 'src/app/models/resetPassword.model';
+import { CustomEncoder } from 'src/app/models/custom-encoder';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,6 @@ export class AuthenticationService {
   }
 
   private createCompleteRoute = (route: string, envAddress: string) => {
-    debugger;
     return `${envAddress}/${route}`;
   }
 
@@ -60,5 +60,13 @@ export class AuthenticationService {
 
   public resetPassword = (route: string, body: ResetPassword) => {
     return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
+  }
+
+  public confirmEmail = (route: string, token: string, email: string) => {
+    let params = new HttpParams({ encoder: new CustomEncoder() });
+    params = params.append('token', token);
+    params = params.append('email', email);
+
+    return this.http.get(this.createCompleteRoute(route, this.envUrl.urlAddress), { params: params });
   }
 }

@@ -24,7 +24,6 @@ export class ResetPasswordComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    debugger;
     this.resetPasswordForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')

@@ -17,11 +17,9 @@ export class ForgotPasswordComponent implements OnInit {
   showError: boolean;
 
   constructor(private authService: AuthenticationService) { 
-    debugger;
   }
 
   ngOnInit(): void {
-    debugger;
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl("", [Validators.required])
     })
@@ -36,7 +34,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   public forgotPassword = (forgotPasswordValue) => {
-    debugger;
     this.showError = this.showSuccess = false;
 
     const forgotPass = { ...forgotPasswordValue };

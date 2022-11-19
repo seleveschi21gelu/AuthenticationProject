@@ -4,4 +4,5 @@ export interface UserModel {
     email: string;
     password: string;
     confirmPassword: string;
+    clientURI: string;
 }
