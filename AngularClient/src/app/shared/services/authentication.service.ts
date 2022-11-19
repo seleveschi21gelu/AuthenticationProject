@@ -7,6 +7,7 @@ import { LoginModel } from 'src/app/models/loginModel';
 import { AuthResponse } from 'src/app/models/authResponse.model';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ForgotPassword } from 'src/app/models/forgotPassword.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthenticationService {
   }
 
   private createCompleteRoute = (route: string, envAddress: string) => {
+    debugger;
     return `${envAddress}/${route}`;
   }
 
@@ -49,5 +51,10 @@ export class AuthenticationService {
     const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 
     return role === 'Administrator';
+  }
+
+  public forgotPassword = (route: string, body: ForgotPassword) => {
+    debugger;
+    return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 }

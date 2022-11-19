@@ -23,8 +23,12 @@
                     <input type="password" id="password" formControlName="password" class="form-control" />
                 </div>
                 <div class="col-md-5">
-                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is
+                        required</em>
                 </div>
+            </div>
+            <div>
+                <a [routerLink]="['/authentication/forgotPassword']"> Forgot Password </a>
             </div>
             <br>
             <div class="mb-3 row">

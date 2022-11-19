@@ -67,7 +67,7 @@ namespace CompanyEmployees.Controllers
             return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token });
         }
 
-        [HttpPost("ForgotPassword")]
+        [HttpPost("forgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordVM model)
         {
             if (!ModelState.IsValid)
