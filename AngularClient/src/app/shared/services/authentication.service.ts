@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserModel } from 'src/app/models/UserModel';
-import { RegisterResponse } from 'src/app/models/RegisterResponse';
+import { UserModel } from 'src/app/models/userModel';
+import { RegisterResponse } from 'src/app/models/registerResponse';
 import { EnvironmentUrlService } from './environment-url.service';
 import { LoginModel } from 'src/app/models/loginModel';
 import { AuthResponse } from 'src/app/models/authResponse.model';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ForgotPassword } from 'src/app/models/forgotPassword.model';
+import { ResetPassword } from 'src/app/models/resetPassword.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,10 @@ export class AuthenticationService {
   }
 
   public forgotPassword = (route: string, body: ForgotPassword) => {
-    debugger;
+    return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
+  }
+
+  public resetPassword = (route: string, body: ResetPassword) => {
     return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 }

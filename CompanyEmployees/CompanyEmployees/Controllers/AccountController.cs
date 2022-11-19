@@ -91,5 +91,26 @@ namespace CompanyEmployees.Controllers
 
             return result ? Ok(result) : BadRequest(result);
         }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordVM resetPassword)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            if (user == null)
+                return BadRequest("Invalid Request");
+
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+            if (!resetPasswordResult.Succeeded)
+            {
+                var errors = resetPasswordResult.Errors.Select(e => e.Description);
+
+                return BadRequest(new { Errors = errors });
+            }
+
+            return Ok();
+        }
     }
 }

@@ -5,22 +5,25 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
   declarations: [
     RegisterUserComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'forgotPassword', component: ForgotPasswordComponent },
       { path: 'register', component: RegisterUserComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'forgotPassword', component: ForgotPasswordComponent },
+      { path: 'resetPassword', component: ResetPasswordComponent   },
     ])
   ]
 })

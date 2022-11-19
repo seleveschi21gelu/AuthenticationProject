@@ -12,12 +12,12 @@ export class ErrorHandlerService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = this.handleError(error);
-        return throwError(() => new Error(errorMessage));
-      })
-    )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = this.handleError(error);
+          return throwError(() => new Error(errorMessage));
+        })
+      )
   }
 
   private handleError = (error: HttpErrorResponse): string => {
@@ -38,7 +38,8 @@ export class ErrorHandlerService implements HttpInterceptor {
   }
 
   private handleBadRequest = (error: HttpErrorResponse): string => {
-    if (this.router.url === '/authentication/register') {
+    if (this.router.url === '/authentication/register' ||
+      this.router.url.startsWith('/authentication/resetPassword')) {
       let message = '';
       const values = Object.values(error.error.errors);
       values.map((m: string) => {
