@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
 
     const authUser: LoginModel = {
       email: login.username,
-      password: login.password
+      password: login.password,
+      clientURI: 'http://localhost:4200/authentication/forgotPassword'
     }
 
     this.authService.loginUser('api/account/login', authUser)

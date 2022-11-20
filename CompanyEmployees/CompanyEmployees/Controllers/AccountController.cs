@@ -73,15 +73,34 @@ namespace CompanyEmployees.Controllers
                 return Unauthorized(new AuthResponse { ErrorMessage = "Email is not confirmed" });
             }
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginModel.Password))
+            if (!await _userManager.CheckPasswordAsync(user, loginModel.Password))
             {
+                await _userManager.AccessFailedAsync(user);
+
+                if (await _userManager.IsLockedOutAsync(user))
+                {
+                    var content = $@"Your account is locked out. To reset the password click this link: {loginModel.ClientURI}";
+                    var message = new Message(new string[] { loginModel.Email },
+                        "Locked out account information", content, null);
+
+                    await _emailSender.SendEmailAsync(message);
+
+                    return Unauthorized(new AuthResponse { ErrorMessage = "The account is locked out" });
+                }
+
                 return Unauthorized(new AuthResponse { ErrorMessage = "Invalid Authentication" });
+            }
+            else if (await _userManager.IsLockedOutAsync(user))
+            {
+                return Unauthorized(new AuthResponse { ErrorMessage = "The account is locked out" });
             }
 
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = await _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            await _userManager.ResetAccessFailedCountAsync(user);
 
             return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token });
         }
@@ -128,6 +147,8 @@ namespace CompanyEmployees.Controllers
 
                 return BadRequest(new { Errors = errors });
             }
+
+            await _userManager.SetLockoutEndDateAsync(user, new DateTime(2000, 1, 1));
 
             return Ok();
         }

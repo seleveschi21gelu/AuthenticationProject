@@ -43,6 +43,10 @@ builder.Services.AddIdentity<User, IdentityRole>(opt =>
     opt.SignIn.RequireConfirmedEmail = true;
 
     opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+
+    opt.Lockout.AllowedForNewUsers = true;
+    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    opt.Lockout.MaxFailedAccessAttempts = 5;
 }).AddEntityFrameworkStores<RepositoryContext>()
   .AddDefaultTokenProviders()
   .AddTokenProvider<EmailConfirmationTokenProvider<User>>("emailconfirmation");

@@ -26,7 +26,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     } else if (error.status === 400) {
       return this.handleBadRequest(error);
     } else if (error.status === 401) {
-      return this.handleUnautorized(error);
+      return this.handleUnauthorized(error);
     } else if (error.status === 403) {
       return this.handleForbidden(error);
     }
@@ -52,8 +52,8 @@ export class ErrorHandlerService implements HttpInterceptor {
     }
   }
 
-  private handleUnautorized = (error: HttpErrorResponse) => {
-    if (this.router.url === '/authentication/login') {
+  private handleUnauthorized = (error: HttpErrorResponse) => {
+    if (this.router.url.startsWith('/authentication/login')) {
       return error.error.errorMessage;
     } else {
       this.router.navigate(['/authentication/login'], { queryParams: { returnUrl: this.router.url } });
