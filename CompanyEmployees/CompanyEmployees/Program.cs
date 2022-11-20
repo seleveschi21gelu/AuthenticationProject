@@ -1,4 +1,5 @@
 using CompanyEmployees.Entities.DataTransferObjects;
+using CompanyEmployees.Entities.Helpers;
 using CompanyEmployees.Entities.Models;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Repository;
@@ -39,8 +40,12 @@ builder.Services.AddIdentity<User, IdentityRole>(opt =>
     opt.Password.RequireDigit = false;
 
     opt.User.RequireUniqueEmail = true;
+    opt.SignIn.RequireConfirmedEmail = true;
+
+    opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
 }).AddEntityFrameworkStores<RepositoryContext>()
-  .AddDefaultTokenProviders();
+  .AddDefaultTokenProviders()
+  .AddTokenProvider<EmailConfirmationTokenProvider<User>>("emailconfirmation");
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 
@@ -62,6 +67,11 @@ builder.Services.AddAuthentication(opt =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
     };
 });
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
+
+builder.Services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+    opt.TokenLifespan = TimeSpan.FromDays(3));
 
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
                                        .Get<EmailConfiguration>();
