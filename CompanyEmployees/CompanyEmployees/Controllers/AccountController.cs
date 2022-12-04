@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CompanyEmployees.Entities.DataTransferObjects;
 using CompanyEmployees.Entities.Models;
+using CompanyEmployees.Interfaces;
 using EmailSenderProject.Interfaces;
 using EmailSenderProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +21,15 @@ namespace CompanyEmployees.Controllers
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
         private readonly IEmailSender _emailSender;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
+        public AccountController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender, ITokenService tokenService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
             _emailSender = emailSender;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -97,10 +101,9 @@ namespace CompanyEmployees.Controllers
 
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = await _jwtHandler.GetClaims(user);
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            var token = _tokenService.GenerateToken(signingCredentials, claims);
 
-            var refreshToken = _jwtHandler.GenerateRefreshToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken(user);
 
             await _userManager.ResetAccessFailedCountAsync(user);
 
@@ -174,7 +177,7 @@ namespace CompanyEmployees.Controllers
         }
 
         [HttpPost("Refresh")]
-        public IActionResult RefreshToken(TokenApiModel model)
+        public async Task<IActionResult> RefreshToken(TokenApiModel model)
         {
             if (model is null)
             {
@@ -184,21 +187,26 @@ namespace CompanyEmployees.Controllers
             string accessToken = model.AccessToken;
             string refreshToken = model.RefreshToken;
 
-            var principal = _jwtHandler.GetPrincipalFromExpiredToken(accessToken);
+            var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
             var username = principal.Identity.Name;
 
-            var user = _jwtHandler.GetUser(username);
+            var user = _tokenService.GetUser(username);
 
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
                 return BadRequest("Invalid client request");
             }
 
-            var newAccessToken = new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(_jwtHandler.GetSigningCredentials(),
-                                                                          principal.Claims.ToList()));
-            var newRefreshToken = _jwtHandler.GenerateRefreshToken(user);
+            var newAccessToken = _tokenService.GenerateToken(_jwtHandler.GetSigningCredentials(), principal.Claims.ToList());
+            var newRefreshToken = _tokenService.GenerateRefreshToken(user);
 
             return Ok(new AuthResponse { Token = newAccessToken, RefreshToken = newRefreshToken });
         }
+
+        [HttpPost, Authorize]
+        [Route("Revoke")]
+        public IActionResult Revoke()
+                => _tokenService.RevokeRefreshToken(User.Identity.Name) ? NoContent()
+                                                                        : BadRequest();
     }
 }

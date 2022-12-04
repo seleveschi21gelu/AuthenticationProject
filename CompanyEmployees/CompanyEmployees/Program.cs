@@ -2,7 +2,9 @@ using CompanyEmployees.Entities.DataTransferObjects;
 using CompanyEmployees.Entities.Helpers;
 using CompanyEmployees.Entities.Models;
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Interfaces;
 using CompanyEmployees.Repository;
+using CompanyEmployees.Service;
 using EmailSenderProject.Interfaces;
 using EmailSenderProject.Models;
 using EmailService;
@@ -82,7 +84,7 @@ var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
 
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddControllers();
 

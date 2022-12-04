@@ -1,7 +1,6 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthResponse } from 'src/app/models/authResponse.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { EnvironmentUrlService } from '../services/environment-url.service';
