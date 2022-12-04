@@ -6,5 +6,6 @@ import { Injectable } from '@angular/core';
 })
 export class EnvironmentUrlService {
   public urlAddress: string = environment.urlAddress;
+  public clientUrlAddress: string = environment.clientUrl;
   constructor() { }
 }

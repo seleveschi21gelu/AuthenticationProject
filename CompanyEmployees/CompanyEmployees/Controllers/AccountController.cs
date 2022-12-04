@@ -100,9 +100,11 @@ namespace CompanyEmployees.Controllers
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
+            var refreshToken = _jwtHandler.GenerateRefreshToken(user);
+
             await _userManager.ResetAccessFailedCountAsync(user);
 
-            return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token });
+            return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token, RefreshToken = refreshToken });
         }
 
         [HttpPost("forgotPassword")]
@@ -169,6 +171,34 @@ namespace CompanyEmployees.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost("Refresh")]
+        public IActionResult RefreshToken(TokenApiModel model)
+        {
+            if (model is null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            string accessToken = model.AccessToken;
+            string refreshToken = model.RefreshToken;
+
+            var principal = _jwtHandler.GetPrincipalFromExpiredToken(accessToken);
+            var username = principal.Identity.Name;
+
+            var user = _jwtHandler.GetUser(username);
+
+            if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            var newAccessToken = new JwtSecurityTokenHandler().WriteToken(_jwtHandler.GenerateTokenOptions(_jwtHandler.GetSigningCredentials(),
+                                                                          principal.Claims.ToList()));
+            var newRefreshToken = _jwtHandler.GenerateRefreshToken(user);
+
+            return Ok(new AuthResponse { Token = newAccessToken, RefreshToken = newRefreshToken });
         }
     }
 }

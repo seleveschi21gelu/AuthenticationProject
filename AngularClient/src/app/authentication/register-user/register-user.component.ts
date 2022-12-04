@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/userModel';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/custom-validators/password-confirmation-validator.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
 
 @Component({
   selector: 'app-register-user',
@@ -16,7 +17,7 @@ export class RegisterUserComponent implements OnInit {
   public errorMessage: string = '';
   public showError: boolean;
   constructor(private authService: AuthenticationService, private passwordConfirmValidatorService: PasswordConfirmationValidatorService,
-    private router: Router) { }
+    private router: Router, private envUrl: EnvironmentUrlService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -49,7 +50,7 @@ export class RegisterUserComponent implements OnInit {
       email: formValues.email,
       password: formValues.password,
       confirmPassword: formValues.confirm,
-      clientURI: 'http://localhost:4200/authentication/emailConfirmation'
+      clientURI: `${this.envUrl.clientUrlAddress}/authentication/emailConfirmation`
     }
 
     this.authService.registerUser("api/Account/register", user).subscribe({

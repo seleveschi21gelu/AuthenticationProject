@@ -79,3 +79,8 @@ C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\EmailSenderProject.pdb
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\bin\Debug\net6.0\EmailService.pdb
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\CompanyEmployees.MvcApplicationPartsAssemblyInfo.cs
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\staticwebassets\msbuild.CompanyEmployees.Microsoft.AspNetCore.StaticWebAssets.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\staticwebassets\msbuild.build.CompanyEmployees.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CompanyEmployees.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CompanyEmployees.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\CompanyEmployees\obj\Debug\net6.0\staticwebassets.pack.json

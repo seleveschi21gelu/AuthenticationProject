@@ -31,3 +31,8 @@ C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\EmailSenderProject.pdb
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\EmailSenderProject.genruntimeconfig.cache
 C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\ref\EmailSenderProject.dll
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\staticwebassets\msbuild.EmailSenderProject.Microsoft.AspNetCore.StaticWebAssets.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\staticwebassets\msbuild.build.EmailSenderProject.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.EmailSenderProject.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.EmailSenderProject.props
+C:\PersonalProjects\AuthenticationProject\CompanyEmployees\EmailSender\obj\Debug\net6.0\staticwebassets.pack.json

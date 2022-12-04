@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DPiCw3riWufq+VVpVKCpLKDMUcFHEDjYxi2cO6h8fF4=",
+  "Hash": "rZ2SEcr+MWW+ff6ZkUpfukxhOGcAtBxkDZ28IoUp4PU=",
   "Source": "CompanyEmployees",
   "BasePath": "_content/CompanyEmployees",
   "Mode": "Default",
@@ -12,10 +12,10 @@
       "Source": "EmailSenderProject",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
       "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
       "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
-      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier"
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
     }
   ],
   "DiscoveryPatterns": [],

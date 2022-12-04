@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthResponse } from 'src/app/models/authResponse.model';
 import { LoginModel } from 'src/app/models/loginModel';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean;
 
-  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private authService: AuthenticationService, private router: Router, private route: ActivatedRoute, 
+    private envUrl: EnvironmentUrlService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -42,13 +44,14 @@ export class LoginComponent implements OnInit {
     const authUser: LoginModel = {
       email: login.username,
       password: login.password,
-      clientURI: 'http://localhost:4200/authentication/forgotPassword'
+      clientURI: `${this.envUrl.clientUrlAddress}/authentication/forgotPassword`
     }
 
     this.authService.loginUser('api/account/login', authUser)
       .subscribe({
         next: (res: AuthResponse) => {
           localStorage.setItem("token", res.token);
+          localStorage.setItem("refreshToken", res.refreshToken);
           this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         },

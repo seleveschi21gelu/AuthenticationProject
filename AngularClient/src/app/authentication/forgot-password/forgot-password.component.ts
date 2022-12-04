@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ForgotPassword } from 'src/app/models/forgotPassword.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { EnvironmentUrlService } from 'src/app/shared/services/environment-url.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
   showSuccess: boolean;
   showError: boolean;
 
-  constructor(private authService: AuthenticationService) { 
+  constructor(private authService: AuthenticationService, private envUrl: EnvironmentUrlService) { 
   }
 
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     const forgotPassword: ForgotPassword = {
       email: forgotPass.email,
-      clientURI: 'http://localhost:4200/authentication/resetPassword'
+      clientURI: `${this.envUrl.clientUrlAddress}/authentication/resetPassword`
     }
 
     this.authService.forgotPassword('api/account/forgotPassword', forgotPassword)
